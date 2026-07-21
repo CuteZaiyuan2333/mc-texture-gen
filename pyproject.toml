@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "mc-texture-gen"
+version = "0.6.0"
+description = "Diffusion-based Minecraft texture generator"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "MC Texture Gen Team" }]
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "Pillow>=9.0.0",
+    "numpy>=1.21.0",
+    "tqdm>=4.64.0",
+]
+
+[project.scripts]
+mc-train = "src.train:train"
+mc-generate = "src.generate:sample"
+
+[tool.setuptools.packages.find]
+where = ["."]

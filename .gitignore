@@ -1,4 +1,24 @@
+# Training data (gitignored — supply your own)
 training_data/
+
+# Python cache
 **/__pycache__/
-*.pth
-/generated_texture.png
+*.pyc
+
+# Model checkpoints
+checkpoints/*.pth
+!checkpoints/.gitkeep
+
+# Generated outputs
+outputs/*.png
+!outputs/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
