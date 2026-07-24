@@ -13,8 +13,6 @@ from torchvision import transforms
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_CATEGORIES = {"block", "item", "particle", "effect", "mob_effect"}
-
 
 class MCTextureDataset(Dataset):
     """Scans a directory tree for 16×16 RGBA Minecraft textures and pairs
@@ -62,22 +60,24 @@ class MCTextureDataset(Dataset):
             self.texts.append(self._build_label(png_path))
 
     def _build_label(self, path: Path) -> str:
-        """Derive a text label: pack_name + category + clean_filename."""
+        """Derive text tokens from the full path hierarchy and filename.
+
+        Example: data/ae2things/block/advanced_inscriber/side_off.png
+        → tokens: ae2things, block, advanced, inscriber, side, off
+        """
         relative = path.relative_to(self.root_dir)
         parts = list(relative.parts)
 
-        pack_name = parts[0] if parts else "vanilla"
+        # All directory names (split on _ and -)
+        dir_tokens: list[str] = []
+        for d in parts[:-1]:  # all except the filename
+            for token in d.replace("-", " ").replace("_", " ").split():
+                dir_tokens.append(token)
 
-        category = "unknown"
-        for p in parts:
-            if p.lower() in ALLOWED_CATEGORIES:
-                category = p.lower()
-                break
+        # Filename without extension (split on _ and -)
+        name_tokens = path.stem.replace("-", " ").replace("_", " ").split()
 
-        clean_name = (
-            path.stem.replace("_", " ").replace("-", " ")
-        )
-        return f"{pack_name} {category} {clean_name}".lower()
+        return " ".join(dir_tokens + name_tokens).lower()
 
     # ── Dataset protocol ─────────────────────────────────────────
 

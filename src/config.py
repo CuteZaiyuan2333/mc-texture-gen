@@ -30,17 +30,17 @@ class Config:
     """Centralised hyperparameters for the diffusion model."""
 
     # ── Data ──────────────────────────────────────────
-    data_root: str = "training_data"
+    data_root: str = "data"
     image_size: int = 16
     channels: int = 4  # RGBA
 
     # ── Tokenizer ─────────────────────────────────────
-    max_token_len: int = 10
+    max_token_len: int = 12
 
     # ── Model architecture ────────────────────────────
-    time_emb_dim: int = 512
-    base_channels: int = 128
-    attn_heads: int = 4
+    time_emb_dim: int = 1024
+    base_channels: int = 384
+    attn_heads: int = 8
 
     # ── Diffusion ─────────────────────────────────────
     n_steps: int = 1000
@@ -48,10 +48,10 @@ class Config:
     beta_end: float = 0.02
 
     # ── Training ──────────────────────────────────────
-    batch_size: int = 256
+    batch_size: int = 128
     learning_rate: float = 1e-4
     num_workers: int = 0
-    target_loss: float = 0.005
+    target_loss: float = 0.003
     save_every: int = 50
     log_every: int = 10
     cfg_dropout: float = 0.15  # classifier-free guidance dropout

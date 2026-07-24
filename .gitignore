@@ -1,5 +1,6 @@
 # Training data (gitignored — supply your own)
 training_data/
+data/
 
 # Python cache
 **/__pycache__/
@@ -22,3 +23,6 @@ Thumbs.db
 .vscode/
 *.swp
 *.swo
+
+/data/*
+/.venv
