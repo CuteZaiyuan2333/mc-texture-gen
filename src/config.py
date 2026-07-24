@@ -51,7 +51,7 @@ class Config:
     batch_size: int = 128
     learning_rate: float = 1e-4
     num_workers: int = 0
-    target_loss: float = 0.003
+    target_loss: float = 0.005
     save_every: int = 50
     log_every: int = 10
     cfg_dropout: float = 0.15  # classifier-free guidance dropout

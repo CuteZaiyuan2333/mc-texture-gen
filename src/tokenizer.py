@@ -11,13 +11,27 @@ class Tokenizer:
 
     Vocab is built from all unique words appearing in the dataset labels.
     Index 0 is reserved for padding / unconditional (CFG).
+
+    Two construction modes:
+        Tokenizer(texts=..., max_len=...)   — build vocab from texts
+        Tokenizer(vocab=..., max_len=...)   — restore from saved vocab
     """
 
     PAD_IDX: int = 0
 
-    def __init__(self, texts: List[str], max_len: int = 10) -> None:
+    def __init__(
+        self,
+        texts: List[str] | None = None,
+        max_len: int = 10,
+        vocab: Dict[str, int] | None = None,
+    ) -> None:
         self.max_len = max_len
-        self.vocab: Dict[str, int] = self._build_vocab(texts)
+        if vocab is not None:
+            self.vocab = vocab
+        elif texts is not None:
+            self.vocab = self._build_vocab(texts)
+        else:
+            raise ValueError("Either texts or vocab must be provided")
         self.vocab_size: int = len(self.vocab)
 
     # ── vocab construction ──────────────────────────────────────
